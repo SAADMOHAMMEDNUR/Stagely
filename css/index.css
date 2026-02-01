@@ -1,4 +1,23 @@
 * {
     box-sizing: border-box;
 }
+header {
+    background-color: orange;
+    padding: 20px;
+    text-align: center;
+    font-size: 35px;
+    color: white;
+}
+.lead {
+    text-align: center;
+}
+.container {
+    display: flex;
+}
 
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+    flex-direction: row;
+}
