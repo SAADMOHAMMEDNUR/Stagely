@@ -10,6 +10,13 @@
     color: white;
     position: relative;
   }
+  footer {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+  }
   
   .site-title,
   .site-title:visited,
@@ -59,6 +66,9 @@
     .nav-bar a {
       margin: 0 8px;
       font-size: 18px;
+    }
+    footer {
+      font-size: 14px;
     }
   }
   
