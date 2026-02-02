@@ -1,42 +1,64 @@
 * {
     box-sizing: border-box;
-}
-
-header {
+  }
+  
+  header {
     background-color: orange;
     padding: 20px;
     text-align: center;
     font-size: 35px;
     color: white;
     position: relative;
-}
-
-.site-title, .site-title:visited, .site-title:hover, .site-title:active {
-  color: white;
-  text-decoration: none;
-}
-
-.nav-bar {
+  }
+  
+  .site-title,
+  .site-title:visited,
+  .site-title:hover,
+  .site-title:active {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-bar {
     position: absolute;
-    top: 0px;
+    top: 0;
     right: 10px;
-}
-
-.nav-bar a, .nav-bar a:visited, .nav-bar a:hover {
-  color: white;
-  text-decoration: none;
-  margin-left: 16px;
-  font-size: 25px;
-}
-
-
-.lead {
+  }
+  
+  .nav-bar a,
+  .nav-bar a:visited,
+  .nav-bar a:hover {
+    color: white;
+    text-decoration: none;
+    margin-left: 16px;
+    font-size: 25px;
+  }
+  
+  .lead {
     text-align: center;
-}
-
-.row {
+  }
+  
+  .row {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px;
-    flex-direction: row;
-}
+  }
+  
+  
+  @media (max-width: 768px) {
+    header {
+      font-size: 26px;
+    }
+  
+    .nav-bar {
+      position: static;
+      text-align: center;
+      margin-top: 10px;
+    }
+  
+    .nav-bar a {
+      margin: 0 8px;
+      font-size: 18px;
+    }
+  }
+  

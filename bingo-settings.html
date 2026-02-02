@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bingo Settings | Stagely</title>
+
+  <!-- Bootstrap -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav-bar">
+      <a href="index.html">Home</a>
+      <a href="voting-artists.html">Artists</a>
+      <a href="voting-commercials.html">Commercials</a>
+    </nav>
+
+    <div class="text-center">
+      <a href="index.html" class="site-title">
+        <h1>Stagely</h1>
+      </a>
+      <h2 class="lead">Bingo Settings</h2>
+    </div>
+  </div>
+</header>
+
+<main class="container my-5">
+
+  <section>
+    <h2>Customize Your Bingo Card</h2>
+    <p>
+      This form lets you choose what kinds of buzzwords you want on your
+      Super Bowl bingo card.
+    </p>
+
+    <form action="#" method="get">
+
+      <fieldset class="mb-4">
+        <legend>Buzzword Categories</legend>
+
+        <div>
+          <input type="checkbox" id="football" name="category" value="football">
+          <label for="football">Football moments</label>
+        </div>
+
+        <div>
+          <input type="checkbox" id="commercials" name="category" value="commercials">
+          <label for="commercials">Commercials</label>
+        </div>
+
+        <div>
+          <input type="checkbox" id="halftime" name="category" value="halftime">
+          <label for="halftime">Halftime show</label>
+        </div>
+      </fieldset>
+
+      <div class="mb-4">
+        <label for="difficulty">Bingo difficulty</label>
+        <select id="difficulty" name="difficulty" class="form-select">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="custom-word">Optional custom buzzword</label>
+        <input
+          type="text"
+          id="custom-word"
+          name="custom-word"
+          class="form-control"
+          placeholder="Type a word or phrase">
+      </div>
+
+      <button type="submit" class="btn btn-dark">
+        Save Settings
+      </button>
+
+    </form>
+  </section>
+
+</main>
+
+<footer class="text-center py-4">
+  <p>&copy; 2026 Stagely</p>
+</footer>
+
+</body>
+</html>
