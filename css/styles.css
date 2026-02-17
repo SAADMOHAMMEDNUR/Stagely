@@ -2,6 +2,10 @@
     box-sizing: border-box;
   }
   
+  html {
+    scroll-behavior: smooth;
+  }
+
   header {
     background-color: orange;
     padding: 20px;
@@ -9,6 +13,13 @@
     font-size: 35px;
     color: white;
     position: relative;
+  }
+  footer {
+    background-color: orange;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
   }
   
   .site-title,
@@ -29,14 +40,30 @@
   .nav-bar a:visited,
   .nav-bar a:hover {
     color: white;
-    text-decoration: none;
+    text-decoration: underline;
     margin-left: 16px;
     font-size: 25px;
+  }
+
+  .nav-bar a:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
   }
   
   .lead {
     text-align: center;
   }
+
+  button {
+    min-height: 60px;
+    font-weight: 600;
+  }
+
+  button:disabled {
+    cursor: default;
+    opacity: 0.8;
+  }
+
   
   .row {
     display: flex;
@@ -44,6 +71,14 @@
     margin: 0 -15px;
   }
   
+  .bingo-board {
+    max-width: 500px;
+  }
+
+  .bingo-board .btn {
+    aspect-ratio: 1 / 1;
+  }
+
   
   @media (max-width: 768px) {
     header {
@@ -60,5 +95,14 @@
       margin: 0 8px;
       font-size: 18px;
     }
+    footer {
+      font-size: 14px;
+      padding-bottom: 1.5rem;
+    }
+
+    button {
+      font-size: 14px;
+    }
+
   }
   
