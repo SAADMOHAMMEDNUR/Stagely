@@ -1,32 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Header } from './HeaderBar.jsx'
-import { Footer } from './Footer.jsx'
-import { IndexPage } from './IndexPage.jsx'
-
-function ArtistsPage() {
-  return <h2 className="text-center mt-5">Artists Page (Coming Soon)</h2>
-}
-
-function CommercialsPage() {
-  return <h2 className="text-center mt-5">Commercials Page (Coming Soon)</h2>
-}
-
-function BingoPage() {
-  return <h2 className="text-center mt-5">Bingo Page (Coming Soon)</h2>
-}
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/artists" element={<ArtistsPage />} />
-        <Route path="/commercials" element={<CommercialsPage />} />
-        <Route path="/bingo" element={<BingoPage />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
   )
 }
 
