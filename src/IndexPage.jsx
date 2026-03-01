@@ -1,4 +1,5 @@
 // basically index.html but in react
+import { Link } from 'react-router-dom';
 
 
 export function IndexPage() {
@@ -18,7 +19,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Taylor Swift</h2>
                     <p className="card-text">#1 30,000 votes</p>
-                    <a href="voting-artists.html" className="btn btn-dark">See More</a>
+                    <Link to="/artists" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
@@ -36,7 +37,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Kendrick Lamar</h2>
                     <p className="card-text">#2 20,000 votes</p>
-                    <a href="voting-artists.html" className="btn btn-dark">See More</a>
+                    <Link to="/artists" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
@@ -54,7 +55,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Drake</h2>
                     <p className="card-text">#3 10,000 votes</p>
-                    <a href="voting-artists.html" className="btn btn-dark">See More</a>
+                    <Link to="/artists" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
@@ -76,7 +77,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Budweiser Wassup</h2>
                     <p className="card-text">#1 35,000 votes</p>
-                    <a href="voting-commercials.html" className="btn btn-dark">See More</a>
+                    <Link to="/commercials" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
@@ -94,7 +95,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Snickers Betty White</h2>
                     <p className="card-text">#2 25,000 votes</p>
-                    <a href="voting-commercials.html" className="btn btn-dark">See More</a>
+                    <Link to="/commercials" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
@@ -112,7 +113,7 @@ export function IndexPage() {
                   <div className="col-sm col-xl-12">
                     <h2 className="card-title">Apple 1984</h2>
                     <p className="card-text">#3 15,000 votes</p>
-                    <a href="voting-commercials.html" className="btn btn-dark">See More</a>
+                    <Link to="/commercials" className="btn btn-dark">See More</Link>
                   </div>
                 </div>
               </div>
