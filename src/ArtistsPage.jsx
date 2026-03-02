@@ -1,228 +1,124 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { artistsData } from './data';
+
+function ArtistCard({ artist }) {
+  return (
+    <div className="col-md-6 col-xl-3 d-flex">
+      <div className="card mt-4 mb-4 w-100">
+        <div className="card-body">
+          <div className="row">
+            <div className="col-sm-auto col-xl-12">
+              <img src={artist.image} alt={artist.name} className="img-fluid pb-3" />
+            </div>
+            <div className="col-sm col-xl-12">
+              <h2 className="card-title">{artist.name}</h2>
+              <p className="card-text">#{artist.rank} {artist.votes.toLocaleString()} votes</p>
+              <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function ArtistsPage() {
+  const [sortBy, setSortBy] = useState('votes');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter artists by search term
+  const filteredArtists = artistsData.filter(artist =>
+    artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Sort artists
+  const sortedArtists = [...filteredArtists].sort((a, b) => {
+    if (sortBy === 'votes') {
+      return b.votes - a.votes;
+    } else if (sortBy === 'name') {
+      return a.name.localeCompare(b.name);
+    }
+    return 0;
+  });
+
+  // Group artists into rows of 4
+  const rows = [];
+  for (let i = 0; i < sortedArtists.length; i += 4) {
+    rows.push(sortedArtists.slice(i, i + 4));
+  }
+
   return (
     <main>
       <div className="container-fluid px-4">
-        
-        {/* Row 1 */}
-        {/* Card 1*/}
-        <div className="row">
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
+        {/* Search and Sort Controls */}
+        <div className="row mt-4">
+          <div className="col-12">
+            <div className="card">
               <div className="card-body">
+                <h5 className="card-title mb-3">Search & Sort Artists</h5>
                 <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/taylorswift.webp" alt="Taylor Swift" className="img-fluid pb-3" />
+                  <div className="col-md-6 mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search artists by name..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                   </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Taylor Swift</h2>
-                    <p className="card-text">#1 30,000 votes</p>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                  <div className="col-md-6 mb-3">
+                    <div className="btn-group w-100" role="group">
+                      <input
+                        type="radio"
+                        className="btn-check"
+                        name="sortOptions"
+                        id="sortVotes"
+                        value="votes"
+                        checked={sortBy === 'votes'}
+                        onChange={() => setSortBy('votes')}
+                      />
+                      <label className="btn btn-outline-dark" htmlFor="sortVotes">
+                        Sort by Votes
+                      </label>
 
-        {/* Card 2*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/kendricklamar.jpg" alt="Kendrick Lamar" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Kendrick Lamar</h2>
-                    <p className="card-text">#2 20,000 votes</p>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        {/* Card 3*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/drake.jpg" alt="Drake" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Drake</h2>
-                    <p className="card-text">#3 10,000 votes</p>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
+                      <input
+                        type="radio"
+                        className="btn-check"
+                        name="sortOptions"
+                        id="sortName"
+                        value="name"
+                        checked={sortBy === 'name'}
+                        onChange={() => setSortBy('name')}
+                      />
+                      <label className="btn btn-outline-dark" htmlFor="sortName">
+                        Sort by Name
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-        {/* Card 4*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/beyonce.avif" alt="Beyoncé" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Beyoncé</h2>
-                    <p className="card-text">#4 5,000 votes</p>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
+                <p className="text-muted">{sortedArtists.length} artist(s) found</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Row 2 */}
-        {/* Card 5*/}
-        <div className="row">
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/kanye.webp" alt="Kanye West" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Kanye West</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
+        {/* Artists Grid */}
+        {sortedArtists.length > 0 ? (
+          rows.map((row, rowIndex) => (
+            <div className="row" key={rowIndex}>
+              {row.map((artist) => (
+                <ArtistCard key={artist.id} artist={artist} />
+              ))}
+            </div>
+          ))
+        ) : (
+          <div className="row mt-4">
+            <div className="col-12">
+              <p className="text-center text-muted">No artists found matching your search.</p>
             </div>
           </div>
-
-          {/* Card 6*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/rihanna.avif" alt="Rihanna" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Rihanna</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        {/* Card 7*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/theweeknd.webp" alt="The Weeknd" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">The Weeknd</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        
-        
-        {/* Card 8*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/brunomars.jpg" alt="Bruno Mars" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Bruno Mars</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Row 3 */}
-    `   {/* Card 9*/}
-        <div className="row">
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/badbunny.avif" alt="Bad Bunny" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Bad Bunny</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Card 10*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/postmalone.webp" alt="Post Malone" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Post Malone</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 11*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/sabrinacarpenter.jpg" alt="Sabrina Carpenter" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Sabrina Carpenter</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 12*/}
-          <div className="col-md-6 col-xl-3 d-flex">
-            <div className="card mt-4 mb-4 w-100">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-sm-auto col-xl-12">
-                    <img src="img/arianagrande.jpg" alt="Ariana Grande" className="img-fluid pb-3" />
-                  </div>
-                  <div className="col-sm col-xl-12">
-                    <h2 className="card-title">Ariana Grande</h2>
-                    <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        )}
       </div>
     </main>
   );
