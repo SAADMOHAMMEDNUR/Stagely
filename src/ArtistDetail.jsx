@@ -1,5 +1,5 @@
 import react from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export function ArtistDetail() {
   return (
