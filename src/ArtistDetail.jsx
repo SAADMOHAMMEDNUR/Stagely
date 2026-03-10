@@ -14,6 +14,12 @@ export function ArtistDetail() {
     return <div>Artist not found!</div>;
   }
 
+  const handleVote = () => {
+    const db = getDatabase();
+    const votesRef = ref(db, "artists/" + artist.id + "/votes");
+    firebaseSet(votesRef, artist.votes + 1);
+  };
+
   return (
         <div className="container-fluid px-4">
       <div className="row">
