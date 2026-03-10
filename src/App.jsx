@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/artists" element={<ArtistsPage />} />
-        <Route path="/artists/detail" element={<ArtistDetail />} />
+        <Route path="/artists/:id" element={<ArtistDetail />} />
         <Route path="/commercials" element={<CommercialsPage />} />
         <Route path="/commercials/detail" element={<CommercialDetail />} />
         <Route path="/bingo" element={<BingoPage />} />

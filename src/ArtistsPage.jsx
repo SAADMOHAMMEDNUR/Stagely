@@ -14,7 +14,7 @@ function ArtistCard({ artist }) {
             <div className="col-sm col-xl-12">
               <h2 className="card-title">{artist.name}</h2>
               <p className="card-text">#{artist.rank} {artist.votes.toLocaleString()} votes</p>
-              <Link to="/artists/detail" className="btn btn-dark">View Details</Link>
+              <Link to={`/artists/${artist.id}`} className="btn btn-dark">View Details</Link>
             </div>
           </div>
         </div>
