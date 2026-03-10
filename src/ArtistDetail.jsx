@@ -36,7 +36,7 @@ export function ArtistDetail() {
                     <h2 className="card-title">{artist.name}</h2>
                     <p className="card-text">{artist.votes.toLocaleString()} votes</p>
                     <p>{artist.description}</p>
-                    <Link to="#" className="btn btn-dark">Vote</Link>
+                    <Link to="#" className="btn btn-dark" onClick={handleVote}>Vote</Link>
                   </div>
               </div>
             </div>
