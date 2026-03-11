@@ -11,7 +11,7 @@ export const artistsData = [
     id: 2,
     name: 'Kendrick Lamar',
     image: '/img/kendricklamar.jpg',
-    votes: 20000,
+    votes: 29000,
     rank: 2,
     description: 'Kendrick Lamar is a legendary rapper from Compton, California, known for his intricate lyricism and socially conscious hip-hop.'
   },
