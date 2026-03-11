@@ -3,15 +3,15 @@ import { Link } from "react-router";
 
 export function Header() {
   const NavLinks = [
-    { link: "index.html", text: "Home" },
-    { link: "voting-artists.html", text: "Artists" },
-    { link: "voting-commercials.html", text: "Commercials" },
-    { link: "voting-bingo.html", text: "Make Your Own Bingo" },
+    { link: "/", text: "Home" },
+    { link: "/artists", text: "Artists" },
+    { link: "/commercials", text: "Commercials" },
+    { link: "/bingo", text: "Make Your Own Bingo" },
   ]
   const navItems = NavLinks.map((item) => (
-    <a href={item.link}>
+    <Link to={item.link}>
       {item.text}
-    </a>
+    </Link>
   ));
   return (
     <header>
