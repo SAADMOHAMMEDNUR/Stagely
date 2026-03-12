@@ -5,44 +5,50 @@ function toTitleCase(word) {
   if (!word) {
     return word;
   }
+
   if (word.length === 0) {
     return word;
   }
+
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function BingoSettingsPage() {
-  var navigate = useNavigate();
+function BingoSettingsPage() {
+  const navigate = useNavigate();
 
-  var [football, setFootball] = useState(false);
-  var [commercials, setCommercials] = useState(false);
-  var [halftime, setHalftime] = useState(false);
-
-  var [difficulty, setDifficulty] = useState("medium");
-  var [customWord, setCustomWord] = useState("");
-
-  var [showError, setShowError] = useState(false);
+  const [football, setFootball] = useState(false);
+  const [commercials, setCommercials] = useState(false);
+  const [halftime, setHalftime] = useState(false);
+  const [difficulty, setDifficulty] = useState("medium");
+  const [customWord, setCustomWord] = useState("");
+  const [showError, setShowError] = useState(false);
 
   function selectedCategories() {
-    var cats = [];
+    const categories = [];
+
     if (football) {
-      cats.push("football");
+      categories.push("football");
     }
+
     if (commercials) {
-      cats.push("commercials");
+      categories.push("commercials");
     }
+
     if (halftime) {
-      cats.push("halftime");
+      categories.push("halftime");
     }
-    return cats;
+
+    return categories;
   }
 
   function validate() {
-    var cats = selectedCategories();
-    if (cats.length === 0) {
+    const categories = selectedCategories();
+
+    if (categories.length === 0) {
       setShowError(true);
       return false;
     }
+
     setShowError(false);
     return true;
   }
@@ -56,65 +62,66 @@ export default function BingoSettingsPage() {
     setShowError(false);
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
+  function onSubmit(event) {
+    event.preventDefault();
 
-    var ok = validate();
-    if (!ok) {
+    const isValid = validate();
+    if (!isValid) {
       return;
     }
 
-    // send settings to /bingo via query params
-    var cats = selectedCategories();
-    var params = new URLSearchParams();
+    const categories = selectedCategories();
+    const params = new URLSearchParams();
 
-    var i = 0;
-    while (i < cats.length) {
-      params.append("category", cats[i]);
-      i = i + 1;
+    let categoryIndex = 0;
+    while (categoryIndex < categories.length) {
+      params.append("category", categories[categoryIndex]);
+      categoryIndex = categoryIndex + 1;
     }
 
     params.set("difficulty", difficulty);
 
-    var trimmed = customWord.trim();
-    if (trimmed.length > 0) {
-      params.set("customWord", trimmed);
+    const trimmedCustomWord = customWord.trim();
+    if (trimmedCustomWord.length > 0) {
+      params.set("customWord", trimmedCustomWord);
     }
 
     navigate("/bingo?" + params.toString());
   }
 
-  useEffect(function () {
-    // keeps error updated when user checks boxes
+  useEffect(() => {
     if (showError) {
       validate();
     }
-  }, [football, commercials, halftime]);
+  }, [football, commercials, halftime, showError]);
 
-  // summary text
-  var catsForSummary = selectedCategories();
-  var categoriesSummary = "Categories: none";
-  if (catsForSummary.length > 0) {
-    var nice = [];
-    var j = 0;
-    while (j < catsForSummary.length) {
-      nice.push(toTitleCase(catsForSummary[j]));
-      j = j + 1;
+  const selectedCategoryArray = selectedCategories();
+
+  let categoriesSummary = "Categories: none";
+  if (selectedCategoryArray.length > 0) {
+    const formattedCategories = [];
+    let categoryIndex = 0;
+
+    while (categoryIndex < selectedCategoryArray.length) {
+      formattedCategories.push(toTitleCase(selectedCategoryArray[categoryIndex]));
+      categoryIndex = categoryIndex + 1;
     }
-    categoriesSummary = "Categories: " + nice.join(", ");
+
+    categoriesSummary = "Categories: " + formattedCategories.join(", ");
   }
 
-  var difficultySummary = "Difficulty: " + toTitleCase(difficulty);
+  const difficultySummary = "Difficulty: " + toTitleCase(difficulty);
 
-  var customSummary = "Custom: none";
-  var trimmedCustom = customWord.trim();
-  if (trimmedCustom.length > 0) {
-    customSummary = "Custom: " + trimmedCustom;
+  let customSummary = "Custom: none";
+  const trimmedCustomWord = customWord.trim();
+  if (trimmedCustomWord.length > 0) {
+    customSummary = "Custom: " + trimmedCustomWord;
   }
+
+  const errorClassName = "text-danger mt-2" + (showError ? "" : " d-none");
 
   return (
     <div>
-      {/* component styles to match your nicer HTML version */}
       <style>{`
         .settings-card { max-width: 820px; border-radius: 18px; }
         .form-help { color: #6c757d; font-size: 0.95rem; }
@@ -128,7 +135,9 @@ export default function BingoSettingsPage() {
         <div className="mx-auto card shadow-sm p-4 p-md-5 settings-card">
           <div className="mb-4">
             <h2 className="mb-1">Customize Your Bingo Card</h2>
-            <p className="form-help mb-0">Pick what you care about, then generate your bingo card.</p>
+            <p className="form-help mb-0">
+              Pick what you care about, then generate your bingo card.
+            </p>
           </div>
 
           <form onSubmit={onSubmit} noValidate>
@@ -142,8 +151,8 @@ export default function BingoSettingsPage() {
                     className="form-check-input m-0"
                     type="checkbox"
                     checked={football}
-                    onChange={function (e) {
-                      setFootball(e.target.checked);
+                    onChange={(event) => {
+                      setFootball(event.target.checked);
                     }}
                   />
                   <span>Football moments</span>
@@ -154,8 +163,8 @@ export default function BingoSettingsPage() {
                     className="form-check-input m-0"
                     type="checkbox"
                     checked={commercials}
-                    onChange={function (e) {
-                      setCommercials(e.target.checked);
+                    onChange={(event) => {
+                      setCommercials(event.target.checked);
                     }}
                   />
                   <span>Commercials</span>
@@ -166,15 +175,15 @@ export default function BingoSettingsPage() {
                     className="form-check-input m-0"
                     type="checkbox"
                     checked={halftime}
-                    onChange={function (e) {
-                      setHalftime(e.target.checked);
+                    onChange={(event) => {
+                      setHalftime(event.target.checked);
                     }}
                   />
                   <span>Halftime show</span>
                 </label>
               </div>
 
-              <div className={"text-danger mt-2" + (showError ? "" : " d-none")}>
+              <div className={errorClassName}>
                 Please select at least one category.
               </div>
             </fieldset>
@@ -183,25 +192,30 @@ export default function BingoSettingsPage() {
               <label htmlFor="difficulty" className="form-label h5">
                 Bingo difficulty
               </label>
+
               <select
                 id="difficulty"
                 className="form-select"
                 value={difficulty}
-                onChange={function (e) {
-                  setDifficulty(e.target.value);
+                onChange={(event) => {
+                  setDifficulty(event.target.value);
                 }}
               >
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
               </select>
-              <div className="form-help mt-2">Easy = common moments • Hard = rarer moments</div>
+
+              <div className="form-help mt-2">
+                Easy = common moments • Hard = rarer moments
+              </div>
             </div>
 
             <div className="mb-4">
               <label htmlFor="customWord" className="form-label h5">
                 Optional custom buzzword
               </label>
+
               <input
                 type="text"
                 id="customWord"
@@ -209,10 +223,11 @@ export default function BingoSettingsPage() {
                 maxLength={30}
                 placeholder="Type a word or phrase (max 30 chars)"
                 value={customWord}
-                onChange={function (e) {
-                  setCustomWord(e.target.value);
+                onChange={(event) => {
+                  setCustomWord(event.target.value);
                 }}
               />
+
               <div className="form-help mt-2">
                 Example: “Dog in a commercial” or “Crazy halftime outfit”
               </div>
@@ -230,6 +245,7 @@ export default function BingoSettingsPage() {
               <button className="btn btn-dark" type="submit">
                 Generate Bingo Card
               </button>
+
               <button
                 className="btn btn-outline-dark"
                 type="button"
@@ -244,3 +260,5 @@ export default function BingoSettingsPage() {
     </div>
   );
 }
+
+export default BingoSettingsPage;

@@ -1,34 +1,27 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 
-/*
-  DO NOT CHANGE THESE WORDS TEAM (exact set)
-*/
 const CARD_WORDS = [
   "Touchdown",
   "Crowd cheers",
   "Instant replay",
   "Flag on play",
   "Field goal",
-
   "Celebrity cameo",
   "Car commercial",
   "Slow-motion shot",
   "Mascot appears",
   "Insurance ad",
-
   "Coach yelling",
   "Halftime teaser",
   "FREE",
   "Drone camera",
   "Timeout",
-
   "Pop song plays",
   "Fast food ad",
   "Confetti shot",
   "Brand slogan",
   "Laughing fans",
-
   "Missed tackle",
   "Halftime outfit change",
   "Fireworks",
@@ -39,18 +32,30 @@ const CARD_WORDS = [
 const FREE_INDEX = 12;
 
 function buildLines() {
-  var lines = [];
-  var r = 0;
+  const lines = [];
+  let rowIndex = 0;
 
-  while (r < 5) {
-    lines.push([r * 5 + 0, r * 5 + 1, r * 5 + 2, r * 5 + 3, r * 5 + 4]);
-    r = r + 1;
+  while (rowIndex < 5) {
+    lines.push([
+      rowIndex * 5 + 0,
+      rowIndex * 5 + 1,
+      rowIndex * 5 + 2,
+      rowIndex * 5 + 3,
+      rowIndex * 5 + 4
+    ]);
+    rowIndex = rowIndex + 1;
   }
 
-  var c = 0;
-  while (c < 5) {
-    lines.push([0 * 5 + c, 1 * 5 + c, 2 * 5 + c, 3 * 5 + c, 4 * 5 + c]);
-    c = c + 1;
+  let columnIndex = 0;
+  while (columnIndex < 5) {
+    lines.push([
+      0 * 5 + columnIndex,
+      1 * 5 + columnIndex,
+      2 * 5 + columnIndex,
+      3 * 5 + columnIndex,
+      4 * 5 + columnIndex
+    ]);
+    columnIndex = columnIndex + 1;
   }
 
   lines.push([0, 6, 12, 18, 24]);
@@ -59,12 +64,51 @@ function buildLines() {
   return lines;
 }
 
-export default function BingoPage() {
-  var lines = useMemo(function () {
-    return buildLines();
-  }, []);
+function getCellStyle(index, marked) {
+  const buttonStyle = {
+    minHeight: "120px",
+    width: "100%",
+    border: "2px solid #1f1f1f",
+    borderRadius: "14px",
+    background: "#fff",
+    fontWeight: 600,
+    fontSize: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: "14px",
+    lineHeight: "1.15",
+    userSelect: "none",
+    cursor: "pointer"
+  };
 
-  var [marked, setMarked] = useState(function () {
+  if (index === FREE_INDEX) {
+    buttonStyle.background = "#6c757d";
+    buttonStyle.color = "#fff";
+    buttonStyle.borderColor = "#6c757d";
+    buttonStyle.cursor = "not-allowed";
+  }
+
+  if (marked.has(index)) {
+    buttonStyle.background = "#212529";
+    buttonStyle.color = "#fff";
+    buttonStyle.borderColor = "#212529";
+  }
+
+  if (index === FREE_INDEX) {
+    buttonStyle.background = "#6c757d";
+    buttonStyle.color = "#fff";
+    buttonStyle.borderColor = "#6c757d";
+  }
+
+  return buttonStyle;
+}
+
+function BingoPage(props) {
+  const lines = buildLines();
+
+  const [marked, setMarked] = useState(() => {
     return new Set([FREE_INDEX]);
   });
 
@@ -73,16 +117,16 @@ export default function BingoPage() {
       return;
     }
 
-    setMarked(function (prev) {
-      var next = new Set(prev);
+    setMarked((previousMarked) => {
+      const nextMarked = new Set(previousMarked);
 
-      if (next.has(index)) {
-        next.delete(index);
+      if (nextMarked.has(index)) {
+        nextMarked.delete(index);
       } else {
-        next.add(index);
+        nextMarked.add(index);
       }
 
-      return next;
+      return nextMarked;
     });
   }
 
@@ -90,100 +134,82 @@ export default function BingoPage() {
     setMarked(new Set([FREE_INDEX]));
   }
 
-  // bingo check (no ternary)
-  var hasBingo = false;
-  var i = 0;
+  let hasBingo = false;
+  let lineIndex = 0;
 
-  while (i < lines.length) {
-    var line = lines[i];
-    var allMarked = true;
+  while (lineIndex < lines.length) {
+    const currentLine = lines[lineIndex];
+    let allMarked = true;
 
-    var j = 0;
-    while (j < line.length) {
-      if (!marked.has(line[j])) {
+    let itemIndex = 0;
+    while (itemIndex < currentLine.length) {
+      if (!marked.has(currentLine[itemIndex])) {
         allMarked = false;
       }
-      j = j + 1;
+      itemIndex = itemIndex + 1;
     }
 
     if (allMarked) {
       hasBingo = true;
     }
 
-    i = i + 1;
+    lineIndex = lineIndex + 1;
   }
 
-  var statusText = "No bingo yet — keep watching 👀";
+  let statusText = "No bingo yet — keep watching 👀";
   if (hasBingo) {
-    statusText = "BINGO! 🎉 You got it!";
+    statusText = "BINGO! You got it!";
   }
 
-  var statusClass = "text-muted";
+  let statusClassName = "text-muted";
   if (hasBingo) {
-    statusClass = "fw-bold";
+    statusClassName = "fw-bold";
   }
 
-  // Inline styles so nothing can break the layout
-  var pageWrap = { paddingTop: "24px", paddingBottom: "24px" };
+  const pageWrapStyle = {
+    paddingTop: "24px",
+    paddingBottom: "24px"
+  };
 
-  var titleStyle = { fontSize: "44px", fontWeight: 800, marginBottom: "6px", textAlign: "center" };
-  var subtitleStyle = { textAlign: "center", color: "#6c757d", marginBottom: "18px" };
+  const titleStyle = {
+    fontSize: "44px",
+    fontWeight: 800,
+    marginBottom: "6px",
+    textAlign: "center"
+  };
 
-  var controlsStyle = { display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap", marginBottom: "22px" };
+  const subtitleStyle = {
+    textAlign: "center",
+    color: "#6c757d",
+    marginBottom: "18px"
+  };
 
-  var gridWrap = { display: "flex", justifyContent: "center" };
+  const controlsStyle = {
+    display: "flex",
+    justifyContent: "center",
+    gap: "12px",
+    flexWrap: "wrap",
+    marginBottom: "22px"
+  };
 
-  var gridStyle = {
+  const gridWrapStyle = {
+    display: "flex",
+    justifyContent: "center"
+  };
+
+  const gridStyle = {
     width: "min(920px, 100%)",
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
     gap: "14px"
   };
 
-  function cellStyle(index) {
-    var base = {
-      minHeight: "120px",
-      width: "100%",
-      border: "2px solid #1f1f1f",
-      borderRadius: "14px",
-      background: "#fff",
-      fontWeight: 600,
-      fontSize: "18px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
-      padding: "14px",
-      lineHeight: "1.15",
-      userSelect: "none",
-      cursor: "pointer"
-    };
+  const statusWrapStyle = {
+    textAlign: "center",
+    marginTop: "22px"
+  };
 
-    if (index === FREE_INDEX) {
-      base.background = "#6c757d";
-      base.color = "#fff";
-      base.borderColor = "#6c757d";
-      base.cursor = "not-allowed";
-    }
-
-    if (marked.has(index)) {
-      base.background = "#212529";
-      base.color = "#fff";
-      base.borderColor = "#212529";
-    }
-
-    if (index === FREE_INDEX) {
-      // keep FREE gray even though it’s marked
-      base.background = "#6c757d";
-      base.color = "#fff";
-      base.borderColor = "#6c757d";
-    }
-
-    return base;
-  }
-
-  var statusWrap = { textAlign: "center", marginTop: "22px" };
-  var badgeStyle = {
+  const badgeStyle = {
     display: "inline-block",
     padding: "6px 12px",
     borderRadius: "999px",
@@ -193,10 +219,32 @@ export default function BingoPage() {
     marginTop: "10px"
   };
 
-  var markedCount = marked.size;
+  const markedCount = marked.size;
+
+  const cardButtonElements = CARD_WORDS.map((word, index) => {
+    let isDisabled = false;
+
+    if (index === FREE_INDEX) {
+      isDisabled = true;
+    }
+
+    return (
+      <button
+        key={index}
+        type="button"
+        disabled={isDisabled}
+        style={getCellStyle(index, marked)}
+        onClick={() => {
+          toggleMark(index);
+        }}
+      >
+        {word}
+      </button>
+    );
+  });
 
   return (
-    <main className="container" style={pageWrap}>
+    <main className="container" style={pageWrapStyle}>
       <h2 style={titleStyle}>Your Bingo Card</h2>
       <p style={subtitleStyle}>Click a square when it happens during the game!</p>
 
@@ -204,39 +252,19 @@ export default function BingoPage() {
         <Link to="/bingo-settings" className="btn btn-outline-dark">
           Back to Settings
         </Link>
+
         <button type="button" className="btn btn-dark" onClick={clearMarks}>
           Clear Marks
         </button>
       </div>
 
-      <div style={gridWrap}>
-        <div style={gridStyle}>
-          {CARD_WORDS.map(function (word, index) {
-            var isDisabled = false;
-            if (index === FREE_INDEX) {
-              isDisabled = true;
-            }
-
-            return (
-              <button
-                key={index}
-                type="button"
-                disabled={isDisabled}
-                style={cellStyle(index)}
-                onClick={function () {
-                  toggleMark(index);
-                }}
-              >
-                {word}
-              </button>
-            );
-          })}
-        </div>
+      <div style={gridWrapStyle}>
+        <div style={gridStyle}>{cardButtonElements}</div>
       </div>
 
-      <div style={statusWrap}>
+      <div style={statusWrapStyle}>
         <p className="fw-bold mb-1">Progress:</p>
-        <p className={statusClass} style={{ marginBottom: "0px" }}>
+        <p className={statusClassName} style={{ marginBottom: "0px" }}>
           {statusText}
         </p>
         <div>
@@ -246,3 +274,5 @@ export default function BingoPage() {
     </main>
   );
 }
+
+export default BingoPage;
