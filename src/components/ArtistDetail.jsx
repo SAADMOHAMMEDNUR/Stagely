@@ -1,6 +1,6 @@
 import react from 'react';
 import { Link, useParams } from 'react-router';
-import { artistsData } from './data';
+import { artistsData } from '../data/data';
 
 export function ArtistDetail() {
   const { id } = useParams();

@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { artistsData } from './data';
+import { commercialsData } from '../data/data';
 
-function ArtistCard({ artist }) {
+function CommercialCard({ commercial }) {
   return (
     <div className="col-md-6 col-xl-3 d-flex">
       <div className="card mt-4 mb-4 w-100">
         <div className="card-body">
           <div className="row">
             <div className="col-sm-auto col-xl-12">
-              <img src={artist.image} alt={artist.name} className="img-fluid pb-3" />
+              <img src={commercial.image} alt={commercial.name} className="img-fluid pb-3"/>
             </div>
             <div className="col-sm col-xl-12">
-              <h2 className="card-title">{artist.name}</h2>
-              <p className="card-text">#{artist.rank} {artist.votes.toLocaleString()} votes</p>
-              <Link to={`/artists/${artist.id}`} className="btn btn-dark">View Details</Link>
+              <h2 className="card-title">{commercial.name}</h2>
+              <p className="card-text">#{commercial.rank} {commercial.votes.toLocaleString()} votes</p>
+              <Link to="/commercials/detail" className="btn btn-dark">View Details</Link>
             </div>
           </div>
         </div>
@@ -23,17 +23,17 @@ function ArtistCard({ artist }) {
   );
 }
 
-export function ArtistsPage() {
+export function CommercialsPage() {
   const [sortBy, setSortBy] = useState('votes');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filter artists by search term
-  const filteredArtists = artistsData.filter(artist =>
-    artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter commercials by search term
+  const filteredCommercials = commercialsData.filter(commercial =>
+    commercial.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Sort artists
-  const sortedArtists = [...filteredArtists].sort((a, b) => {
+  // Sort commercials
+  const sortedCommercials = [...filteredCommercials].sort((a, b) => {
     if (sortBy === 'votes') {
       return b.votes - a.votes;
     } else if (sortBy === 'name') {
@@ -42,10 +42,10 @@ export function ArtistsPage() {
     return 0;
   });
 
-  // Group artists into rows of 4
+  // Group commercials into rows of 4
   const rows = [];
-  for (let i = 0; i < sortedArtists.length; i += 4) {
-    rows.push(sortedArtists.slice(i, i + 4));
+  for (let i = 0; i < sortedCommercials.length; i += 4) {
+    rows.push(sortedCommercials.slice(i, i + 4));
   }
 
   return (
@@ -56,13 +56,13 @@ export function ArtistsPage() {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title mb-3">Search & Sort Artists</h5>
+                <h5 className="card-title mb-3">Search & Sort Commercials</h5>
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Search artists by name..."
+                      placeholder="Search commercials by name..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -97,25 +97,25 @@ export function ArtistsPage() {
                     </div>
                   </div>
                 </div>
-                <p className="text-muted">{sortedArtists.length} artist(s) found</p>
+                <p className="text-muted">{sortedCommercials.length} commercial(s) found</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Artists Grid */}
-        {sortedArtists.length > 0 ? (
+        {/* Commercials Grid */}
+        {sortedCommercials.length > 0 ? (
           rows.map((row, rowIndex) => (
             <div className="row" key={rowIndex}>
-              {row.map((artist) => (
-                <ArtistCard key={artist.id} artist={artist} />
+              {row.map((commercial) => (
+                <CommercialCard key={commercial.id} commercial={commercial} />
               ))}
             </div>
           ))
         ) : (
           <div className="row mt-4">
             <div className="col-12">
-              <p className="text-center text-muted">No artists found matching your search.</p>
+              <p className="text-center text-muted">No commercials found matching your search.</p>
             </div>
           </div>
         )}

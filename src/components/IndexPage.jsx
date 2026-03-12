@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { artistsData, commercialsData } from './data';
+import { artistsData, commercialsData } from '../data/data';
 
 function ArtistCard({ artist }) {
   return (
