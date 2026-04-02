@@ -1,16 +1,17 @@
-# React + Vite
+Stagely
+A Super Bowl-themed web app where users can vote on halftime show artists and commercials, and play an interactive bingo game in real time.
+Live Site: stagely-2812e.web.app
+My Contributions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Built the Artists and Commercials pages and their individual detail pages
+Integrated Firebase Realtime Database for live voting (real-time reads and writes)
+Handled dynamic routing between list and detail views
+Debugged and resolved multiple React/Firebase issues including useEffect placement, state variable mismatches, and deployment conflicts
 
-Currently, two official plugins are available:
+Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React + JavaScript
+Firebase Realtime Database
+Firebase Hosting
+Vite
+CSS
